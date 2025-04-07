@@ -20,15 +20,18 @@
       margin-top: 2em;
       max-width: 100%;  /* Ensures it fits within the viewable area */
       height: auto;     /* Maintains aspect ratio */
-      animation: rotate 30s linear infinite; /* Rotates every 30 seconds */
+      animation: rotate 31s linear infinite; /* Total cycle is 31 seconds: 30s stationary + 1s for rotation */
     }
     /* CSS Keyframes for rotating the image */
     @keyframes rotate {
-      from {
+      0% {
         transform: rotate(0deg);
       }
-      to {
-        transform: rotate(360deg);
+      97% {
+        transform: rotate(0deg); /* No rotation for 30 seconds */
+      }
+      100% {
+        transform: rotate(360deg); /* Rotate 360 degrees in 1 second */
       }
     }
   </style>
@@ -38,7 +41,7 @@
   <div id="countdown">Loading...</div>
 
   <!-- Image below the countdown -->
-  <img src="IMG_2004.jpeg" alt="Countdown image" />
+  <img src="IMG_1958.jpeg" alt="Countdown image" />
 
   <script src="script.js"></script>
 </body>

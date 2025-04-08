@@ -9,6 +9,8 @@
       text-align: center;
       padding: 2em;
       background: #f3f4f6;
+      margin: 0;
+      position: relative;
     }
     #countdown {
       font-size: 2em;
@@ -17,11 +19,12 @@
     }
     /* Style for the image */
     img {
-      margin-top: 2em;
-      max-width: 50%;  /* Makes the image 75% of its original size */
-      height: auto;     /* Maintains aspect ratio */
+      width: auto;            /* Let the width scale naturally */
+      height: 100vh;          /* Set the image to occupy 100% of the viewport height */
+      object-fit: cover;      /* Ensures the image covers the full space while maintaining its aspect ratio */
       animation: rotate 31s linear infinite; /* Total cycle is 31 seconds: 30s stationary + 1s for rotation */
     }
+
     /* CSS Keyframes for rotating the image */
     @keyframes rotate {
       0% {
@@ -34,15 +37,78 @@
         transform: rotate(360deg); /* Rotate 360 degrees in 1 second */
       }
     }
+
+    /* Time display styles */
+    .time {
+      position: absolute;
+      top: 20px;
+      font-size: 1.2em;
+      color: white;
+      font-weight: bold;
+      z-index: 2;
+    }
+    #cst {
+      left: 20px;  /* Position CST on the top-left corner */
+    }
+    #delhi {
+      right: 20px; /* Position Delhi on the top-right corner */
+    }
   </style>
 </head>
 <body>
+
   <h1>Countdown to April 11, 2025 @ Noon CST</h1>
   <div id="countdown">Loading...</div>
 
   <!-- Image below the countdown -->
   <img src="IMG_1958.jpeg" alt="Countdown image" />
 
-  <script src="script.js"></script>
+  <!-- CST and Delhi time displays -->
+  <div id="cst" class="time"></div>
+  <div id="delhi" class="time"></div>
+
+  <script>
+    // Function to update both CST and Delhi time
+    function updateTime() {
+      // Get current time in CST and IST
+      const cstDate = new Date().toLocaleString("en-US", { timeZone: "America/Chicago", hour12: true });
+      const delhiDate = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata", hour12: true });
+
+      // Update the time displays
+      document.getElementById('cst').textContent = "CST: " + cstDate;
+      document.getElementById('delhi').textContent = "Delhi: " + delhiDate;
+    }
+
+    // Initial call to update time and refresh every second
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // Countdown logic (same as before)
+    const countdownEl = document.getElementById('countdown');
+    const targetDate = new Date("2025-04-11T12:00:00-06:00");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        countdownEl.textContent = "The event has started!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.textContent =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // Initial countdown and update every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
 </body>
 </html>

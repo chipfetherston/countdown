@@ -55,10 +55,14 @@
       z-index: 2;
     }
     #cst {
-      left: 20px;  /* Position CST on the top-left corner */
+      left: 20px;  /* Position Whitefish Bay on the top-left corner */
     }
     #delhi {
       right: 20px; /* Position Delhi on the top-right corner */
+    }
+    #williamstown {
+      left: 20px; /* Position Williamstown, MA on the top-left corner */
+      top: 50px;  /* Adjust to below Whitefish Bay time */
     }
   </style>
 </head>
@@ -70,20 +74,23 @@
   <!-- Image below the countdown -->
   <img src="IMG_1958.jpeg" alt="Countdown image" />
 
-  <!-- CST and Delhi time displays -->
+  <!-- Time displays -->
   <div id="cst" class="time"></div>
   <div id="delhi" class="time"></div>
+  <div id="williamstown" class="time"></div>
 
   <script>
-    // Function to update both CST and Delhi time
+    // Function to update both CST (Whitefish Bay), Williamstown, and Delhi time
     function updateTime() {
-      // Get current time in CST and IST
-      const cstDate = new Date().toLocaleString("en-US", { timeZone: "America/Chicago", hour12: true });
+      // Get current time for Whitefish Bay (CST), Williamstown, and Delhi
+      const whitefishBayDate = new Date().toLocaleString("en-US", { timeZone: "America/Chicago", hour12: true });
+      const williamstownDate = new Date().toLocaleString("en-US", { timeZone: "America/New_York", hour12: true });
       const delhiDate = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata", hour12: true });
 
       // Update the time displays
-      document.getElementById('cst').textContent = "CST: " + cstDate;
+      document.getElementById('cst').textContent = "Whitefish Bay: " + whitefishBayDate;
       document.getElementById('delhi').textContent = "Delhi: " + delhiDate;
+      document.getElementById('williamstown').textContent = "Williamstown: " + williamstownDate;
     }
 
     // Initial call to update time and refresh every second
